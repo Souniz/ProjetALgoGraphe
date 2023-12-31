@@ -78,10 +78,21 @@ def coloriage_glouton(graph:list):
         sommet_color[sommet-1]=trouveColor(listvoisin[sommet],sommet_color,color)
     return sommet_color
 
-a=[[0,1,0],
-       [1,0,1],
-       [0,1,0]]
-print(coloriage_glouton(a))
+a=[[0,1,1,0,0,1,0,0,0],
+      [1,0,1,1,0,0,1,0,0],
+      [1,1,0,1,1,0,0,0,0],
+      [0,1,1,0,1,0,1,1,0],
+      [0,0,1,1,0,1,0,0,0],
+      [1,0,0,0,1,0,0,1,1],
+      [0,1,0,1,0,0,0,0,0],
+      [0,0,0,1,0,1,0,0,1],
+      [0,0,0,0,0,1,0,1,0]]
+# print()
+
+import time
+start_time = time.time()
+coloriage_glouton(a)
+print("--- %s seconds ---" % (time.time() - start_time))
 
 
 
