@@ -39,10 +39,21 @@ def algo_powell(graphe):
 
     
 #test
+import time
 import numpy as np
-graphe= np.array([[0,0,0,1,1],[1,0,0,1,1], [1,0,0,0,0], [0,0,1,0,0],[0,0,1,0,0]])
+graphe= np.array([[0,0,0,1,1,0,0,1,0],
+                  [1,0,0,1,1,0,0,1,0], 
+                  [1,0,0,0,0,0,0,1,0], 
+                  [0,0,1,0,1,1,0,1,0],
+                  [0,1,1,0,0,1,0,0,0],
+                  [1,0,1,0,1,0,0,1,0],
+                  [1,0,0,0,0,0,0,1,0],
+                  [0,0,0,0,0,0,0,0,0],
+                  [0,1,1,0,1,0,0,1,0]])
+start_time = time.time()
 print(degré(graphe))
 print(algo_powell(graphe))
+print("--- %s seconds ---" % (time.time() - start_time))
 
 
 # %% Algorithme de glouton
@@ -61,38 +72,15 @@ def glouton(graphe):
     glouton=dict(sorted(glouton.items(), key=lambda item: item[1]))
     return glouton
 #test
-graphe= np.array([[0,0,0,1,1],[1,0,0,1,1], [1,0,0,0,0], [0,0,1,0,0],[0,0,1,0,0]])
+start_time = time.time()
+graphe= np.array([[0,0,0,1,1,0,0,1,0],
+                  [1,0,0,1,1,0,0,1,0], 
+                  [1,0,0,0,0,0,0,1,0], 
+                  [0,0,1,0,1,1,0,1,0],
+                  [0,1,1,0,0,1,0,0,0],
+                  [1,0,1,0,1,0,0,1,0],
+                  [1,0,0,0,0,0,0,1,0],
+                  [0,0,0,0,0,0,0,0,0],
+                  [0,1,1,0,1,0,0,1,0]])
 print(glouton(graphe))
-
-#%% Algorithme de Backtracking
-#Fonction qui vérifie que deus sommets adjacents n'ont pas la même couleur
-def color_valide(graphe,s,colors,color):
-    for v in range(len(graphe)):
-        if colors[s]==color and colors[v]==color:
-            return False,v
-        return True,v
-
-def backtracking(graphe,colors,Nb_colors):
-    colors=np.zeros((Nb_colors,Nb_colors),dtype=int)
-    if colors!=0:
-        return True
-    for s in range(len(graphe)):
-        for c in range(1,Nb_colors):
-            test_color=color_valide(graphe,s,colors,c)
-            if test_color[0]==True:
-                v=test_color[1]
-                colors[s,v]=c
-                if backtracking(graphe,colors,Nb_colors):
-                    return True
-                colors[s,v]=c+1
-    return False
-
-#test
-def colorier(gaphe):
-graphe= np.array([[0,0,0,1,1],[1,0,0,1,1], [1,0,0,0,0], [0,0,1,0,0],[0,0,1,0,0]])
-print(glouton(graphe))
-
-
-
-    
-            
+print("--- %s seconds ---" % (time.time() - start_time))
