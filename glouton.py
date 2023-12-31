@@ -26,7 +26,7 @@ def transform_en_listVoisin(graphMD):
     diction={}
     for i in range(0,len(graphMD)):
          l=[]
-         for j in range(0,len(graphMD)):
+         for j in range(0,len(graphMD[i])):
            if graphMD[i][j]:
                l.append(j+1)
          diction[i+1]=l  
@@ -65,7 +65,10 @@ def trouveColor(voisin:list,Sommet_color:list,color:list):
 def coloriage_glouton(graph:list):
     """Colorier un graphe en utilisant l'algorithme de Glouton
     Args:
-        graph ( type:GrapheTL): Un graphe de represente par une matrice d'adjecence
+        graph ( type:GrapheMD): Un graphe de represente par une matrice d'adjecence
+
+        Returns:
+        list: retourne une liste tel que la valeur de la ieme cas represente la couleur du sommet i
     """
     sommets=trie_sommet(graph)
     color=[i for i in range(1,len(graph)+1)]
