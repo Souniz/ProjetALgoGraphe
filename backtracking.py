@@ -58,7 +58,7 @@ a=[[0,1,1,0,0,1,0,0,0],
       [0,0,0,0,0,1,0,1,0]]
 #print()
 
-import time
-start_time = time.time()
-backtract(a)
-print("--- %s seconds ---" % (time.time() - start_time))
+# import time
+# start_time = time.time()
+# backtract(a)
+# print("--- %s seconds ---" % (time.time() - start_time))
