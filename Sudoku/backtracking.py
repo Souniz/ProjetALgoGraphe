@@ -51,16 +51,4 @@ def trouvCouleur(g,sommet,couleur,sommet_couleur):
             if trouvCouleur(g,sommet+1,couleur,sommet_couleur):
                 return True
     return False
-a=[[0,1,1,0,0,1,0,0,0],
-      [1,0,1,1,0,0,1,0,0],
-      [1,1,0,1,1,0,0,0,0],
-      [0,1,1,0,1,0,1,1,0],
-      [0,0,1,1,0,1,0,0,0],
-      [1,0,0,0,1,0,0,1,1],
-      [0,1,0,1,0,0,0,0,0],
-      [0,0,0,1,0,1,0,0,1],
-      [0,0,0,0,0,1,0,1,0]]
-# import time
-# start_time = time.time()
-# backtract(a)
-# print("--- %s seconds ---" % (time.time() - start_time))
+
