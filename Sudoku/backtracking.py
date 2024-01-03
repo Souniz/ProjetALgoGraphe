@@ -15,11 +15,29 @@ def transform_en_listVoisin(graphMD):
                l.append(j+1)
          diction[i+1]=l  
     return diction
-def backtract(grapheMD:list,nb_couleur=0):
+def pre_verification(g,some_coul):
+    """Verifie qu'on a pas saisie des chiffre qui respect
+      pas la regle du jeu de suduko
+
+    Args:
+        g (dict): le graphe de dictionaire
+        some_coul (list): les chiffre(couleur) deja saisi(attribuer)
+
+    Returns:
+        bool: True si c'est bon 
+    """
+    for sommet in g:
+        non_valid=set(int(some_coul[i-1]) for i in g[sommet])
+        if some_coul[sommet-1]!= 0 and int(some_coul[sommet-1]) in non_valid:
+            return False
+    return True
+def backtract(grapheMD:list,sommet_couleur,nb_couleur=0):
     """Colorier un graphe en utilisant l'algorithme de Glouton
     Args:
         graph ( type:GrapheMD): Un graphe de represente par une matrice d'adjecence
-        nb_couleur(optionel):le nbre maximal de couleur 
+        sommet_couleur(type:n):liste dont l'element a l'indice i represente la couleur 
+        du sommet i+1 et vide('') si le sommet n'a pas encore de couleur
+        nb_couleur(type:n)(optionel):le nbre maximal de couleur 
 
     Returns:
         list: retourne une liste tel que la valeur de la ieme cas represente la couleur du sommet i
@@ -27,28 +45,31 @@ def backtract(grapheMD:list,nb_couleur=0):
     if(nb_couleur==0):
         nb_couleur=len(grapheMD)
     g=transform_en_listVoisin(grapheMD)
-    sommet_couleur=[None for i in range(0,len(grapheMD))]
-    couleur=[j for j in range(1,nb_couleur+1)]
-    trouvCouleur(g,1,couleur,sommet_couleur)
-    return sommet_couleur
-def trouvCouleur(g,sommet,couleur,sommet_couleur):
+    if not pre_verification(g,sommet_couleur):
+        return False
+    return trouvCouleur(g,1,nb_couleur,sommet_couleur)
+def trouvCouleur(g,sommet,nb_couleur,sommet_couleur):
     """Trouve la couleur d'un sommet par backtracking
     Args:
-        voisin (list): les voisin du sommet a colorier
-        couleur (list): la liste des couleurs
+        graph ( type:dictionnaire): Un graphe de represente un dictionnaire dont chaque sommet est
+        associe a sa liste de succeseur 
+        nb_couleur (int): nombre de couleur de couleurs
+        voisin (list): le premier sommet a colorier
         sommet_couleur (list): liste telque la ieme case contient la couleur du sommet i ou
-        None si le sommet n'est pas encore colorier
-
-    Returns:
-        int: la couleur choisit par backtracking
-    """
+        0 si le sommet n'a pas encore de couleur
+        """
     if(sommet==len(sommet_couleur)+1):
         return True
-    non_valid=set(sommet_couleur[i-1] for i in g[sommet])
-    for c in couleur:
+    non_valid=set(int(sommet_couleur[i-1]) for i in g[sommet])
+    if type(sommet_couleur[sommet-1])==str:
+        if trouvCouleur(g,sommet+1,nb_couleur,sommet_couleur):
+          return True
+        return False
+    for c in range(1,nb_couleur+1):
         sommet_couleur[sommet-1]=c
         if c not in non_valid:
-            if trouvCouleur(g,sommet+1,couleur,sommet_couleur):
+            if trouvCouleur(g,sommet+1,nb_couleur,sommet_couleur):
                 return True
+    sommet_couleur[sommet-1]=0
     return False
 
